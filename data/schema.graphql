@@ -1,0 +1,60 @@
+type Cliente {
+  id: ID
+  nombre: String
+  apellido: String
+  empresa: String
+  emails: [Email]
+  edad: Int
+  tipo: TipoCliente
+  pedidos: [Pedido]
+}
+type Email {
+  email: String
+}
+"""
+ Asigna categorìa del Cliente
+"""
+enum TipoCliente {
+  PREMIUM
+  BASICO
+}
+type Pedido {
+  producto: String
+  precio: Int
+}
+
+type Query {
+  getCliente(id: ID): Cliente
+}
+
+input PedidoInput {
+  producto: String
+  precio: Int
+}
+input EmialInput {
+  email: String
+}
+"""
+ Campos para los nuevos Cliente
+"""
+input ClienteInput {
+  id: ID
+  nombre: String!
+  apellido: String!
+  empresa: String!
+  emails: [EmialInput]
+  edad: Int!
+  tipo: TipoCliente!
+  pedidos: [PedidoInput]
+}
+
+"""
+ Mutations para crear nuevos Clientes
+"""
+type Mutation {
+  #Nombre del Resolver , Input con Datos y Valor q RETORNA
+  """
+   Permite Crear nuevos Cliente
+  """
+  crearCliente(input: ClienteInput): Cliente
+}

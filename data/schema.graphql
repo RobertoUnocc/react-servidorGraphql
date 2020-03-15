@@ -1,60 +1,87 @@
-type Cliente {
-  id: ID
-  nombre: String
-  apellido: String
-  empresa: String
-  emails: [Email]
-  edad: Int
-  tipo: TipoCliente
-  pedidos: [Pedido]
+schema===== 
+sección donde se definen los tipos de operaciones de nuestra API.
+Las Queries serán las consultas que se podrán realizar y las Mutations la 
+forma en la que realizamos modificaciones
+en el servidor.
+
+Query====== 
+se definen dos consultas: pizzas e ingredients:
+La consulta pizzas puede recibir como parámetros un 
+array de string (name: [String]) y devolverá
+un array con objetos de tipo Pizza ([Pizza]).
+La consulta ingredients no recibe parámetros y
+ devolverá un array con objetos de tipo Ingredient ([Ingredient]).
+
+
+Mutation===== 
+se define la modificación createPizzas que 
+creará pizzas y que puede recibir un array de objetos de
+ tipo PizzaInput (pizzas: [PizzaInput]) y que devolverá un array
+de objetos de tipo Pizza ([Pizza]) con las pizzas creadas.
+
+
+
+
+query{
+  getClientes{
+    id
+    nombre
+  }
 }
-type Email {
-  email: String
-}
-"""
- Asigna categorìa del Cliente
-"""
-enum TipoCliente {
-  PREMIUM
-  BASICO
-}
-type Pedido {
-  producto: String
-  precio: Int
+query{
+  getClientes(limite:5){
+    id
+    nombre
+  }
 }
 
-type Query {
-  getCliente(id: ID): Cliente
+
+
+
+mutation{
+  crearCliente(input:{
+    nombre: "Carloss" 
+    apellido:"unocc"
+    empresa:"InkGrid"
+    emails:[
+      {email:"carlos00_@gmail.com"},
+        	{email:"yanitra_@gmail.com"},
+    ]
+    edad:22
+    tipo:PREMIUM
+    pedidos:[
+      {producto:"Curso JS0"
+      precio: 180}
+    ]
+  }) {
+    id
+  }
 }
 
-input PedidoInput {
-  producto: String
-  precio: Int
-}
-input EmialInput {
-  email: String
-}
-"""
- Campos para los nuevos Cliente
-"""
-input ClienteInput {
-  id: ID
-  nombre: String!
-  apellido: String!
-  empresa: String!
-  emails: [EmialInput]
-  edad: Int!
-  tipo: TipoCliente!
-  pedidos: [PedidoInput]
+
+mutation{
+  actualizarCliente(input:{
+    id:"5e6d4aca032d9826005a0aee"
+    nombre:"Robertp Carlos"
+    apellido: "Unocc Sihuinta"
+    empresa: "UNMSM"
+    edad:18
+    tipo: PREMIUM
+  }){
+    id
+    nombre
+    apellido
+    empresa
+    edad
+  }
 }
 
-"""
- Mutations para crear nuevos Clientes
-"""
-type Mutation {
-  #Nombre del Resolver , Input con Datos y Valor q RETORNA
-  """
-   Permite Crear nuevos Cliente
-  """
-  crearCliente(input: ClienteInput): Cliente
+
+
+
+
+mutation{
+  eliminarCliente(id: "5e6d4aca032d9826005a0aee")
 }
+
+

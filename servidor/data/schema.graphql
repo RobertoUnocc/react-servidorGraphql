@@ -21,22 +21,57 @@ de objetos de tipo Pizza ([Pizza]) con las pizzas creadas.
 
 
 
-
+============================QUERY=======================
 query{
   getClientes{
     id
     nombre
   }
 }
+=======================ALIAS==
+usando alias al ejecutar mas de una vez la consulta
 query{
-  getClientes(limite:5){
+  uno:getClientes(limite:5){
+    id
+    nombre
+  }
+
+  dos:getClientes(limite:5){
     id
     nombre
   }
 }
 
+=================FRAGMET=======================
+query{
+ uno: getCliente(id: "5e6eb849758dae22284cdf4d"){
+    id
+    nombre
+    emails{
+      email
+    }
+  }
+  
+  getCliente(id: "5e6eb83e758dae22284cdf4c"){
+    ...clientes
+    emails{
+      email
+    }
+  }
+}
+
+fragment clientes on Cliente {
+  nombre
+  apellido
+  edad
+  pedidos{
+    producto
+  }
+}
 
 
+
+==========================0MUTATION=======================
 
 mutation{
   crearCliente(input:{

@@ -1,12 +1,10 @@
 import express from 'express';
 // graphql
 import graphqlHTTP from 'express-graphql';
-import Schema from './data/schema';
-// resolver
-import resolvers from './data/resolvers'
+import {schema} from './data/schema';
+
 
 const app = express();
-const root= resolvers;
 
 
 app.get('/', (req, res) => {
@@ -15,12 +13,11 @@ app.get('/', (req, res) => {
 
 
 app.use('/graphql', graphqlHTTP({
-    // que esquema va a utilizar
-    schema: Schema, //schema: schema->schema,
-    // el resolver se pasa como rootValue
-    rootValue: root,
-    // utilizar graphiql
+    schema,
     graphiql: true
 }))
 
-app.listen(3000, () => console.log('El servidor esta funcionando en el puero 3000'))
+app.listen(8000, () => console.log('El servidor esta funcionando en el puero 8000'));
+
+
+// https://github.com/MigueMartelo/React-GraphQL-Apollo-servidor/blob/master/data/resolvers.js
